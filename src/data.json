@@ -1,0 +1,30 @@
+[
+  {
+    "id": 1,
+    "name": "milk",
+    "price": 100,
+    "url": "https://frieslandcampina.com.pk/annual-reports/2019/assets/images/olpers/cream_1ltr.png",
+    "availableQuantity": 5
+  },
+  {
+    "id": 2,
+    "name": "Chocolate",
+    "price": 10,
+    "url": "https://w7.pngwing.com/pngs/270/101/png-transparent-cadbury-world-white-chocolate-cadbury-dairy-milk-chocolate-food-milk-chocolate-cadbury-dairy-milk.png",
+    "availableQuantity": 6
+  },
+  {
+    "id": 3,
+    "name": "drink",
+    "price": 200,
+    "url": "https://pngimg.com/uploads/pepsi/pepsi_PNG8.png",
+    "availableQuantity": 4
+  },
+  {
+    "id": 4,
+    "name": "chips",
+    "price": 50,
+    "url": "https://www.pngmart.com/files/16/Lays-Chips-Transparent-PNG.png",
+    "availableQuantity": 7
+  }
+]
