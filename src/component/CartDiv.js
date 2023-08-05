@@ -1,16 +1,20 @@
 import React, { useState } from "react";
 import { useCartContext } from "../contexts/CartContext";
 import data from "../data.json";
+import { useProductDataContext } from "../contexts/ProductContext";
 
-const CardDiv = ({ id, name, price, quantity }) => {
-  const targetedAvailable = data.find((prev) => +prev.id === +id);
+const CardDiv = ({ productID, productName, productPrice, quantity }) => {
+
+  const {productsData} =  useProductDataContext();
+
+  const targetedAvailable = productsData.find((prev) => +prev.productID === +productID);
 
   const { setCartProducts } = useCartContext();
 
   const incrementQuantity = () => {
     setCartProducts((prev) =>
       prev.map((product) => {
-        if (product.id === id) {
+        if (product.productID === productID) {
           // console.log("zzzzzaaaazz")
           return {
             ...product,
@@ -26,11 +30,11 @@ const CardDiv = ({ id, name, price, quantity }) => {
 
   const decrementQuantity = () => {
     if (quantity === 1) {
-      setCartProducts((prev) => prev.filter((p) => p.id !== id));
+      setCartProducts((prev) => prev.filter((p) => p.productID !== productID));
     } else {
       setCartProducts((prev) =>
         prev.map((product) => {
-          if (product.id === id) {
+          if (product.productID === productID) {
             return {
               ...product,
               quantity: product.quantity - 1
@@ -45,7 +49,7 @@ const CardDiv = ({ id, name, price, quantity }) => {
 
   return (
     <div className="flex-div">
-      <h2 className="width-set">{name}</h2>
+      <h2 className="width-set">{productName}</h2>
       <div className="incri-decri">
         {" "}
         <button onClick={decrementQuantity} className="button-operation">
@@ -61,8 +65,8 @@ const CardDiv = ({ id, name, price, quantity }) => {
         </button>
       </div>
       {/* <h4 className="width-set">{quantity}</h4> */}
-      <h4 className="width-set">{price}</h4>
-      <h2 className="width-set">{price * quantity}</h2>
+      <h4 className="width-set">{productPrice}</h4>
+      <h2 className="width-set">{productPrice * quantity}</h2>
     </div>
   );
 };

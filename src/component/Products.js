@@ -1,16 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { useCartContext } from "../contexts/CartContext";
 import data from "../data.json";
-function Product({ id, name, price, url, quantity }) {
+import {useProductDataContext} from "../contexts/ProductContext"
+
+function Product({ productID, productName, productPrice, imageURL}) {
   const { cartProducts, setCartProducts } = useCartContext();
   const [activeBtn, setActiveBtn] = useState(false);
+  const {productsData,setProductsData} = useProductDataContext();
 
   // useEffect(() => {
   //   console.log("cartProducts", cartProducts);
   // }, [cartProducts]);
   const HandleCart = () => {
     setCartProducts((prev) => {
-      return [...prev, { id, name, price, quantity: 1 }];
+      return [...prev, { productID, productName, productPrice, quantity: 1 }];
     });
   };
 
@@ -21,7 +24,7 @@ function Product({ id, name, price, url, quantity }) {
     } else {
       setCartProducts((prev) =>
         prev.map((p) => {
-          if (p.id === id) {
+          if (p.productID === productID) {
             return {
               ...p,
               quantity: p.quantity + 1
@@ -36,11 +39,11 @@ function Product({ id, name, price, url, quantity }) {
   const decrementQuantity = () => {
     setActiveBtn(false);
     if (targetedProduct.quantity === 1) {
-      setCartProducts((prev) => prev.filter((p) => p.id !== id));
+      setCartProducts((prev) => prev.filter((p) => p.productID !== productID));
     } else {
       setCartProducts((prev) =>
         prev.map((p) => {
-          if (p.id === id) {
+          if (p.productID === productID) {
             return {
               ...p,
               quantity: p.quantity - 1
@@ -53,10 +56,10 @@ function Product({ id, name, price, url, quantity }) {
     }
   };
 
-  const targetedAvailable = data.find((prev) => {
-    return +prev.id === +id;
+  const targetedAvailable = productsData.find((prev) => {
+    return +prev.productID === +productID;
   });
-  const targetedProduct = cartProducts.find((product) => +product.id === +id);
+  const targetedProduct = cartProducts.find((product) => +product.productID === +productID);
   console.log(
     "targetedAvailable.quantity",
     targetedAvailable.availableQuantity
@@ -65,9 +68,9 @@ function Product({ id, name, price, url, quantity }) {
 
   return (
     <div className="Product">
-      <img src={url} width="200px" />
-      <h2>{name}</h2>
-      <h3>{price}</h3>
+      <img src={imageURL} width="200px" />
+      <h2>{productName}</h2>
+      <h3>{productPrice}</h3>
       {!targetedProduct ? (
         <button className="add-button" onClick={HandleCart}>
           Add to cart
@@ -91,7 +94,7 @@ function Product({ id, name, price, url, quantity }) {
         </div>
       )}
       {targetedAvailable.availableQuantity === targetedProduct?.quantity && (
-        <h3 className="red-color">product is sold</h3>
+        <h3 className="red-color">product is out of stock</h3>
       )}
     </div>
   );

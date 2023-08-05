@@ -7,7 +7,7 @@ export default function Cart() {
   const { cartProducts, setCartProducts } = useCartContext();
   const totalPrice = cartProducts.reduce(
     (accomolator, currentValue) =>
-      +accomolator + currentValue.price * currentValue.quantity,
+      +accomolator + currentValue.productPrice * currentValue.quantity,
     0
   );
 
@@ -20,7 +20,7 @@ export default function Cart() {
         <h2 className="width-set">Total Price</h2>
       </div>
       {cartProducts.map((product) => (
-        <CartDiv key={product.id} {...product} />
+        <CartDiv key={product.productID} {...product} />
       ))}
 
       <div className="total-bill">
