@@ -59,7 +59,7 @@ const CardDiv = ({ productID, productName, productPrice, quantity }) => {
         <button
           onClick={incrementQuantity}
           className="button-operation"
-          disabled={targetedAvailable.availableQuantity === quantity}
+          disabled={+targetedAvailable.availableQuantity === +quantity}
         >
           <h3>+</h3>
         </button>

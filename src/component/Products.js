@@ -60,11 +60,13 @@ function Product({ productID, productName, productPrice, imageURL}) {
     return +prev.productID === +productID;
   });
   const targetedProduct = cartProducts.find((product) => +product.productID === +productID);
-  console.log(
-    "targetedAvailable.quantity",
-    targetedAvailable.availableQuantity
-  );
-  console.log("targetedProduct.quantity", targetedProduct?.quantity);
+  // console.log(
+  //   "targetedAvailable.quantity",
+  //   targetedAvailable.availableQuantity
+  // );
+  // console.log("targetedProduct.quantity", targetedProduct?.quantity);
+
+  
 
   return (
     <div className="Product">
@@ -86,14 +88,17 @@ function Product({ productID, productName, productPrice, imageURL}) {
             onClick={incrementQuantity}
             className="button-operation"
             disabled={
-              targetedAvailable.availableQuantity === targetedProduct.quantity
+              +targetedAvailable.availableQuantity=== +targetedProduct?.quantity
+              
             }
           >
             <h3>+</h3>
           </button>
+
         </div>
+      
       )}
-      {targetedAvailable.availableQuantity === targetedProduct?.quantity && (
+      {+targetedAvailable.availableQuantity === +targetedProduct?.quantity && (
         <h3 className="red-color">product is out of stock</h3>
       )}
     </div>
