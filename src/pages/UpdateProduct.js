@@ -1,8 +1,11 @@
 import react, { useState } from "react";
 import { useProductDataContext } from "../contexts/ProductContext";
+import { useCartContext } from "../contexts/CartContext";
 const UpdateProduct = () => {
     const [productID,setProductID] = useState();
     const {productsData,setProductsData} = useProductDataContext();
+    const {cartProducts,setCartProducts} = useCartContext();
+
     const [targetProduct,setTargetProduct] = useState()
 
    
@@ -31,6 +34,24 @@ const UpdateProduct = () => {
             }
         }))
 
+        setCartProducts(prev => prev.map((p)=> {
+            if(p.productID === targetProduct.productID){
+                return(
+                    {
+                        ...p,
+                        productName:productName.value,
+                        productPrice:productPrice.value
+                    }
+                );
+            }
+            else{
+                return p;
+            }
+        }))
+
+        setTargetProduct(null)
+        
+
     }
 
     const changeHandler = (e) => {
@@ -56,15 +77,15 @@ const UpdateProduct = () => {
             </label><br/>
 
             <label>Price of Product  : <br/>
-            <input type="Number" name="productPrice" value={targetProduct.productPrice}></input>
+            <input type="Number" name="productPrice" onChange={changeHandler} value={targetProduct.productPrice}></input>
             </label><br/>
 
             <label>Available Quantity: <br/>
-            <input type="Number" name="availableQuantity" value={targetProduct.availableQuantity} ></input>
+            <input type="Number" name="availableQuantity" onChange={changeHandler} value={targetProduct.availableQuantity} ></input>
             </label><br/>
 
             <label>URL of ProductImage  : <br/>
-            <input type="text" name="imageURL" value={targetProduct.imageURL}></input>
+            <input type="text" name="imageURL" onChange={changeHandler} value={targetProduct.imageURL}></input>
             </label><br/>
 
             <button type="submit" >Submit</button>
