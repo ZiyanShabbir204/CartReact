@@ -5,11 +5,17 @@ export default function Cart() {
   console.log("in Cart");
 
   const { cartProducts, setCartProducts } = useCartContext();
-  const totalPrice = cartProducts.reduce(
-    (accomolator, currentValue) =>
-      +accomolator + currentValue.productPrice * currentValue.quantity,
-    0
-  );
+  const totalPrice = cartProducts.reduce((acc, currentValue) => {
+    acc += currentValue.productPrice * currentValue.quantity;
+    
+    if(currentValue.variant){
+      acc += currentValue.variant.price * currentValue.quantity
+    }
+
+    return acc
+
+
+  }, 0);
 
   return (
     <>
@@ -30,19 +36,3 @@ export default function Cart() {
     </>
   );
 }
-
-// const CartDiv = ({ name, price, quantity, id }) => {
-//   return (
-//     <div className="flex-div">
-//       <h2 className="width-set">{name}</h2>
-//       <div className="incri-decri">
-//         {" "}
-//         <h3 onClick={decrementQuantity}>-</h3> <h2>{quantity}</h2>{" "}
-//         <h3 onClick={incrementQuantity(id)}>+</h3>
-//       </div>
-//       {/* <h4 className="width-set">{quantity}</h4> */}
-//       <h4 className="width-set">{price}</h4>
-//       <h2 className="width-set">{price * quantity}</h2>
-//     </div>
-//   );
-// };

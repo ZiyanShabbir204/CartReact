@@ -9,11 +9,14 @@ import UpdateProduct from "./pages/UpdateProduct";
 import AddProducts from "./pages/AddProducts";
 import DeleteProduct from "./pages/DeleteProducts";
 import AdminLayout from "./layout/Admin";
+import Button from '@mui/material/Button';
+import DrawerAppBar from "./mui-components/Navbar";
 
 export default function App() {
   const { cartProducts } = useCartContext();
   return (
     <div className="App">
+      <DrawerAppBar />
       <h1>Shopping Cart</h1>
       <div className="navBar">
         <div>
