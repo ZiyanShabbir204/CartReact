@@ -94,6 +94,40 @@ const UpdateProduct = () => {
     console.log("targettt product",targetProduct)
   },[targetProduct])
 
+  const addVariantHandler = (productID) =>{
+    const newVariant = {
+      name: "",
+      price: 0,
+      id: Math.ceil(Math.random() * 1000000000),
+      availableQuantity:0
+    };
+   
+    if(!targetProduct.variants){
+      // targetProduct.variants=newVariant;
+      setTargetProduct((prev)=>{
+        return(
+          {
+            ...prev,
+            variants:[newVariant]
+          }
+        )
+      })
+    }
+    else{
+      const variantList = targetProduct.variants;
+      variantList.push(newVariant);
+      setTargetProduct((prev)=>{
+        return(
+          {
+            ...prev,
+            variants:variantList
+          }
+        )
+      })
+    }
+
+  }
+
   return (
     <>
       <h1> ON Update</h1>
@@ -182,7 +216,7 @@ const UpdateProduct = () => {
                   </label>
                   <label>
                     {" "}
-                    price:{" "}
+                    Available:{" "}
                     <input
                       type="number"
                       value={variant.availableQuantity}
@@ -194,6 +228,7 @@ const UpdateProduct = () => {
               ))
             )}
 
+            <button type="button" onClick={()=>addVariantHandler(targetProduct.productID)}>Add variant</button>
             <button type="submit">Submit</button>
           </form>
         </div>
