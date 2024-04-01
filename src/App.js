@@ -17,8 +17,7 @@ export default function App() {
   return (
     <div className="App">
       <DrawerAppBar />
-      <h1>Shopping Cart</h1>
-      <div className="navBar">
+      {/* <div className="navBar">
         <div>
         <Link to="/Admin">Admin</Link>
         </div>
@@ -33,7 +32,7 @@ export default function App() {
           </h2>
         </div>
 
-      </div>
+      </div> */}
 
       <Routes>
         <Route path="/" element={<Catalog />} />
