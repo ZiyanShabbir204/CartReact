@@ -9,17 +9,20 @@ import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { Button, CardActionArea, CardActions, Stack } from "@mui/material";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
+import Grid from "@mui/material/Grid";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import ListSubheader from "@mui/material/ListSubheader";
 import ListItemButton from "@mui/material/ListItemButton";
+import Chip from "@mui/material/Chip";
 function Product({ productID, productName, productPrice, imageURL }) {
   const { cartProducts, setCartProducts } = useCartContext();
   const [activeBtn, setActiveBtn] = useState(false);
   const { productsData, setProductsData } = useProductDataContext();
   const [saveVariant, setSaveVariant] = useState(null);
+  const [price, setPrice] = useState(productPrice)
 
   const targetedAvailable = productsData.find((prev) => {
     return +prev.productID === +productID;
@@ -121,105 +124,57 @@ function Product({ productID, productName, productPrice, imageURL }) {
         );
       }
     };
+    const handleVariant = (variant)=>{
+      setSaveVariant(variant)
+      setPrice(+productPrice + +variant.price)
+
+
+    }
 
     return (
       <>
-        {/* <div className="Product">
-          <img src={imageURL} width="200px" />
-          <h2>{productName}</h2>
-          <h3>{productPrice}</h3>
-          {!targetedAvailable.variants ? (
-            !targetedProduct ? (
-              <button className="add-button" onClick={HandleCart}>
-                Add to cart
-              </button>
-            ) : (
-              <div className="incri-decri">
-                {" "}
-                <button
-                  onClick={decrementQuantity}
-                  className="button-operation"
-                >
-                  <h3>-</h3>
-                </button>
-                <h2>{targetedProduct.quantity}</h2>{" "}
-                <button
-                  onClick={incrementQuantity}
-                  className="button-operation"
-                  disabled={
-                    +targetedAvailable.availableQuantity ===
-                    +targetedProduct?.quantity
-                  }
-                >
-                  <h3>+</h3>
-                </button>
-              </div>
-            )
-          ) : (
-            <div>
-              {targetedAvailable.variants.map((variant) => (
-                <div onClick={() => setSaveVariant(variant)}>
-                  <h3>{variant.name}</h3>
-                  <h4>{variant.price}</h4>
-                </div>
-              ))}
+        
 
-              <button className="add-button" onClick={HandleCart}>
-                Add to Cart
-              </button>
-            </div>
-          )}
-
-          {+targetedAvailable.availableQuantity ===
-            +targetedProduct?.quantity && (
-            <h3 className="red-color">product is out of stock</h3>
-          )}
-
-        </div> */}
-
-        <Card sx={{ maxWidth: 345 }}>
+        <Card sx={{ maxWidth: 500, width: "100%", margin: "auto" }}>
           <CardMedia
             component="img"
-            width="50"
+            sx={{
+              height: 250,
+              backgroundPosition: "center",
+              backgroundSize: "contain",
+              objectFit: "contain",
+            }}
+            // width="50"
             image={imageURL}
             alt={productName}
           />
 
           <CardContent>
-            <Stack
-              justifyContent="space-between"
-              alignItems="center"
-              spacing={2}
-              direction="row"
-            >
-              <Typography gutterBottom variant="h5" component="div">
-                {productName}
-              </Typography>
-              <Typography variant="body1" fontWeight="bold">
-                {productPrice}
-              </Typography>
+            <Typography gutterBottom variant="h3" component="div">
+              {productName}
+            </Typography>
+
+            <Stack direction="row" justifyContent="space-between">
+              <h3>Price</h3>
+              <h3>{price}</h3>
             </Stack>
-            {targetedAvailable.variants && (
-              <List
-                component="nav"
-                aria-label="secondary mailbox folder"
-                sx={{
-                  width: "100%",
-                  maxWidth: 360,
-                  bgcolor: "background.paper",
-                }}
-              >
-                {targetedAvailable.variants.map((variant) => (
-                  <ListItemButton
-                    onClick={() => setSaveVariant(variant)}
-                    selected={variant.id === saveVariant?.id}
-                  >
-                    <ListItemText primary={variant.name} />
-                    <ListItemText primary={variant.price} />
-                  </ListItemButton>
-                ))}
-              </List>
-            )}
+
+           
+            {targetedAvailable.variants &&
+            <Stack direction="row" justifyContent="center" alignItems="center" gap={2}> {
+              targetedAvailable.variants.map((variant) => (
+                <Chip
+                  label={variant.name}
+                  onClick={() => handleVariant(variant)}
+                  selected={variant.id === saveVariant?.id}
+                  size='medium'
+                  sx={{
+                    fontSize: "18px"
+                  }}
+                  color="success"
+                />
+               
+              )) }</Stack>}
           </CardContent>
           <CardActions
             sx={{

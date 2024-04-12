@@ -46,11 +46,11 @@ function DrawerAppBar(props) {
         Shopping Cart
       </Typography>
       <Divider />
-      <List>
+      <List  >
         {navItems.map((item) => (
-          <ListItem component={Link} to={item.link} key={item.link} disablePadding >
-            <ListItemButton sx={{ textAlign: "center" }}>
-              <ListItemText primary={item.label} />
+          <ListItem component={Link} to={item.link} key={item.link} disablePadding  >
+            <ListItemButton sx={{ textAlign: "center"}}>
+              <ListItemText primary={item.label}  />
             </ListItemButton>
           </ListItem>
         ))}
@@ -82,13 +82,14 @@ function DrawerAppBar(props) {
               flexGrow: 1,
               display: { xs: "none", sm: "block" },
               textAlign: "left",
+              fontSize:"22px",
             }}
           >
             Shopping Cart
           </Typography>
           <Box sx={{ display: { xs: "none", sm: "block" } }}>
             {navItems.map((item) => (
-              <Button component={Link} to={item.link} key={item.link} sx={{ color: "#fff" }}>
+              <Button component={Link} to={item.link} key={item.link} sx={{ color: "#fff", fontSize: "18px" }}>
                 {item.label}
               </Button>
             ))}
