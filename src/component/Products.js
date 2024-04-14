@@ -9,6 +9,9 @@ import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { Button, CardActionArea, CardActions, Stack } from "@mui/material";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
+import IconButton from "@mui/material/IconButton";
+import RemoveIcon from "@mui/icons-material/Remove";
+import AddIcon from "@mui/icons-material/Add";
 import Grid from "@mui/material/Grid";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
@@ -22,7 +25,7 @@ function Product({ productID, productName, productPrice, imageURL }) {
   const [activeBtn, setActiveBtn] = useState(false);
   const { productsData, setProductsData } = useProductDataContext();
   const [saveVariant, setSaveVariant] = useState(null);
-  const [price, setPrice] = useState(productPrice)
+  const [price, setPrice] = useState(productPrice);
 
   const targetedAvailable = productsData.find((prev) => {
     return +prev.productID === +productID;
@@ -124,17 +127,13 @@ function Product({ productID, productName, productPrice, imageURL }) {
         );
       }
     };
-    const handleVariant = (variant)=>{
-      setSaveVariant(variant)
-      setPrice(+productPrice + +variant.price)
-
-
-    }
+    const handleVariant = (variant) => {
+      setSaveVariant(variant);
+      setPrice(+productPrice + +variant.price);
+    };
 
     return (
       <>
-        
-
         <Card sx={{ maxWidth: 500, width: "100%", margin: "auto" }}>
           <CardMedia
             component="img"
@@ -159,22 +158,28 @@ function Product({ productID, productName, productPrice, imageURL }) {
               <h3>{price}</h3>
             </Stack>
 
-           
-            {targetedAvailable.variants &&
-            <Stack direction="row" justifyContent="center" alignItems="center" gap={2}> {
-              targetedAvailable.variants.map((variant) => (
-                <Chip
-                  label={variant.name}
-                  onClick={() => handleVariant(variant)}
-                  selected={variant.id === saveVariant?.id}
-                  size='medium'
-                  sx={{
-                    fontSize: "18px"
-                  }}
-                  color="success"
-                />
-               
-              )) }</Stack>}
+            {targetedAvailable.variants && (
+              <Stack
+                direction="row"
+                justifyContent="center"
+                alignItems="center"
+                gap={2}
+              >
+                {" "}
+                {targetedAvailable.variants.map((variant) => (
+                  <Chip
+                    label={variant.name}
+                    onClick={() => handleVariant(variant)}
+                    selected={variant.id === saveVariant?.id}
+                    size="medium"
+                    sx={{
+                      fontSize: "18px",
+                    }}
+                    color="success"
+                  />
+                ))}
+              </Stack>
+            )}
           </CardContent>
           <CardActions
             sx={{
@@ -200,7 +205,24 @@ function Product({ productID, productName, productPrice, imageURL }) {
                 spacing={2}
                 alignContent="center"
               >
-                <Typography
+                <IconButton aria-label="delete" size="medium" color="error">
+                  <RemoveIcon onClick={decrementQuantity} />
+                </IconButton>
+                <Typography variant="h6">{targetedProduct.quantity}</Typography>
+                <IconButton
+                  aria-label="delete"
+                  size="medium"
+                  color="primary"
+                  // disabled={
+                  //   !targetedAvailable.variants
+                  //     ? +targetedAvailable.availableQuantity === +quantity
+                  //     : +variant.availableQuantity === +quantity
+                  // }
+                >
+                  <AddIcon onClick={incrementQuantity} />
+                </IconButton>
+
+                {/* <Typography
                   gutterBottom
                   variant="h5"
                   component="div"
@@ -218,7 +240,7 @@ function Product({ productID, productName, productPrice, imageURL }) {
                   onClick={decrementQuantity}
                 >
                   -
-                </Typography>
+                </Typography> */}
               </Stack>
             )}
           </CardActions>

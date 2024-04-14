@@ -13,7 +13,7 @@ export default function Admin() {
     <Grid
       container
       justifyContent='center'
-      alignItems="center"
+      alignItems="flex-start"
       direction="row"
       columnSpacing={2.5}
       rowSpacing={1.5}

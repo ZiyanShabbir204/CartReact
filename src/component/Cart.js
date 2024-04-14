@@ -1,38 +1,68 @@
 import React from "react";
 import { useCartContext } from "../contexts/CartContext";
 import CartDiv from "./CartDiv";
+import Stack from "@mui/material/Stack";
+import Typography from "@mui/material/Typography";
 export default function Cart() {
   console.log("in Cart");
 
   const { cartProducts, setCartProducts } = useCartContext();
   const totalPrice = cartProducts.reduce((acc, currentValue) => {
     acc += currentValue.productPrice * currentValue.quantity;
-    
-    if(currentValue.variant){
-      acc += currentValue.variant.price * currentValue.quantity
+
+    if (currentValue.variant) {
+      acc += currentValue.variant.price * currentValue.quantity;
     }
 
-    return acc
-
-
+    return acc;
   }, 0);
 
   return (
     <>
-      <div className="flex-div">
-        <h2 className="width-set">Name</h2>
-        <h4 className="width-set">quantity</h4>
-        <h4 className="width-set">Price</h4>
-        <h2 className="width-set">Total Price</h2>
-      </div>
+      <Stack direction="row" justifyContent="space-around" alignItems="center">
+        <Typography variant="h5" component="h2" fontWeight="bold" width="25%">
+          Name
+        </Typography>
+        <Typography variant="h5" component="h2" fontWeight="bold" width="25%">
+          Quantity
+        </Typography>
+        <Typography variant="h5" component="h2" fontWeight="bold" width="25%">
+          Price
+        </Typography>
+        <Typography variant="h5" component="h2" fontWeight="bold" width="25%">
+          Total Price
+        </Typography>
+      </Stack>
+
       {cartProducts.map((product) => (
         <CartDiv key={product.productID} {...product} />
       ))}
+      <Stack direction="row" justifyContent="space-around" alignItems="center" marginTop={7}>
+        <Typography variant="h5" component="h2" fontWeight="bold" width="25%" color="primary">
+          Total bill
+        </Typography>
+        <Typography
+          variant="h5"
+          component="h2"
+          fontWeight="bold"
+          width="25%"
+        ></Typography>
+        <Typography
+          variant="h5"
+          component="h2"
+          fontWeight="bold"
+          width="25%"
+        ></Typography>
+        <Typography variant="h5" component="h2" fontWeight="bold" width="25%" color="error">
+          {totalPrice}
+        </Typography>
+      </Stack>
 
+      {/* 
       <div className="total-bill">
         <h2>Total bill</h2>
         <h2>{totalPrice}</h2>
-      </div>
+      </div> */}
     </>
   );
 }
