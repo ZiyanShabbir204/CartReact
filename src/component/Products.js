@@ -152,7 +152,7 @@ function Product({ productID, productName, productPrice, imageURL }) {
           />
 
           <CardContent>
-            <Typography gutterBottom variant="h3" component="div">
+            <Typography gutterBottom variant="h4" component="div">
               {productName}
             </Typography>
 

@@ -31,7 +31,7 @@ const AdminProductCard = ({
           title="green iguana"
         />
         <CardContent>
-          <Typography gutterBottom variant="h3" component="div">
+          <Typography gutterBottom variant="h4" component="div">
             {productName}
           </Typography>
 
@@ -39,20 +39,27 @@ const AdminProductCard = ({
             <Typography>ID</Typography>
             <Typography>{productID}</Typography>
           </Stack>
-          {!variants && <Stack direction="row" justifyContent="space-between">
+          {/* {!variants && <Stack direction="row" justifyContent="space-between">
             <h3>Price</h3>
             <h3>{productPrice}</h3>
-          </Stack>}
+          </Stack>} */}
 
           
 
           {variants ? (
             <AdminProductCardVariant variants={variants} />
           ) : (
+            <>
+            <Stack direction="row" justifyContent="space-between">
+            <h3>Price</h3>
+            <h3>{productPrice}</h3>
+          </Stack>
+            
             <Stack direction="row" justifyContent="space-between">
               <h3>available Quantity</h3>
               <h3>{availableQuantity}</h3>
             </Stack>
+            </>
           )}
         </CardContent>
       </Card>
