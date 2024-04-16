@@ -50,7 +50,7 @@ export default function BasicTabs() {
           <Tab label="Delete" component={Link} to="./DeleteProduct" />
         </Tabs>
       </Grid>
-      <Grid xs={12} md={10}>
+      <Grid xs={12} md={10} justifyContent="flex-start">
         <Box
           sx={{
             overflowY: "auto",

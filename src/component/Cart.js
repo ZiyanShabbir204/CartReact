@@ -7,11 +7,16 @@ export default function Cart() {
   console.log("in Cart");
 
   const { cartProducts, setCartProducts } = useCartContext();
+  console.log("cartproduct",cartProducts)
   const totalPrice = cartProducts.reduce((acc, currentValue) => {
-    acc += currentValue.productPrice * currentValue.quantity;
+    // acc += currentValue.productPrice * currentValue.quantity;
 
     if (currentValue.variant) {
       acc += currentValue.variant.price * currentValue.quantity;
+    }
+    else{
+      acc += currentValue.productPrice * currentValue.quantity;
+
     }
 
     return acc;
@@ -58,11 +63,7 @@ export default function Cart() {
         </Typography>
       </Stack>
 
-      {/* 
-      <div className="total-bill">
-        <h2>Total bill</h2>
-        <h2>{totalPrice}</h2>
-      </div> */}
+  
     </>
   );
 }

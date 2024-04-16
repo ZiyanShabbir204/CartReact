@@ -138,10 +138,10 @@ const CardDiv = ({
          
           <>
             <Typography variant="h6" width="25%">
-              {+productPrice + +variant.price}
+              {variant.price}
             </Typography>
             <Typography variant="h6" width="25%">
-              {(+productPrice + +variant.price) * quantity}
+              {(variant.price) * quantity}
             </Typography>
           </>
          

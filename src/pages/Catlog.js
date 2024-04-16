@@ -11,11 +11,12 @@ const Catalog = () => {
     <>
      <Grid
       container
-      justifyContent='center'
+      justifyContent='flex-start'
       alignItems="flex-start"
       direction="row"
       columnSpacing={2.5}
       rowSpacing={1.5}
+      marginLeft={3}
     >
       {productsData.map((d) => (
         <Grid key={d.productID} item xs={12}  md={6} lg={3}>

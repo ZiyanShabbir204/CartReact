@@ -25,12 +25,15 @@ function Product({ productID, productName, productPrice, imageURL }) {
   const [activeBtn, setActiveBtn] = useState(false);
   const { productsData, setProductsData } = useProductDataContext();
   const [saveVariant, setSaveVariant] = useState(null);
-  const [price, setPrice] = useState(productPrice);
 
   const targetedAvailable = productsData.find((prev) => {
     return +prev.productID === +productID;
   });
-
+  const [price, setPrice] = useState(
+    targetedAvailable.variants
+      ? targetedAvailable.variants[0].price
+      : productPrice
+  );
   {
     const targetedProduct = cartProducts.find(
       (product) => +product.productID === +productID
@@ -129,7 +132,7 @@ function Product({ productID, productName, productPrice, imageURL }) {
     };
     const handleVariant = (variant) => {
       setSaveVariant(variant);
-      setPrice(+productPrice + +variant.price);
+      setPrice(variant.price);
     };
 
     return (
@@ -221,26 +224,6 @@ function Product({ productID, productName, productPrice, imageURL }) {
                 >
                   <AddIcon onClick={incrementQuantity} />
                 </IconButton>
-
-                {/* <Typography
-                  gutterBottom
-                  variant="h5"
-                  component="div"
-                  onClick={incrementQuantity}
-                >
-                  +
-                </Typography>
-                <Typography variant="body1" fontWeight="bold">
-                  {targetedProduct.quantity}
-                </Typography>
-                <Typography
-                  gutterBottom
-                  variant="h5"
-                  component="div"
-                  onClick={decrementQuantity}
-                >
-                  -
-                </Typography> */}
               </Stack>
             )}
           </CardActions>

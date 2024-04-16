@@ -39,11 +39,12 @@ const AdminProductCard = ({
             <Typography>ID</Typography>
             <Typography>{productID}</Typography>
           </Stack>
-
-          <Stack direction="row" justifyContent="space-between">
+          {!variants && <Stack direction="row" justifyContent="space-between">
             <h3>Price</h3>
             <h3>{productPrice}</h3>
-          </Stack>
+          </Stack>}
+
+          
 
           {variants ? (
             <AdminProductCardVariant variants={variants} />

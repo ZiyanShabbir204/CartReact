@@ -18,24 +18,25 @@ export default function AddProducts() {
   const SubmitHandler = (e) => {
     e.preventDefault();
     const { productName, productPrice, availableQuantity, imageURL } = e.target;
-    debugger;
+
     const productData = {
       productID: Date.now(),
       productName: productName.value,
-      productPrice: productPrice.value,
       imageURL: imageURL.value,
     };
 
     if (variants.length === 0) {
       productData.availableQuantity = availableQuantity.value;
+      productData.productPrice = productPrice.value;
     } else {
       productData.variants = variants;
     }
 
     productName.value = "";
-    productPrice.value = "";
+
     if (variants.length === 0) {
       availableQuantity.value = "";
+      productPrice.value = "";
     }
 
     imageURL.value = "";
@@ -85,14 +86,15 @@ export default function AddProducts() {
               variant="outlined"
               // margin="normal"
             />
-
-            <TextField
-              id="product-price"
-              label="Product Price"
-              type="number"
-              name="productPrice"
-              // margin="normal"
-            />
+            {variants.length === 0 && (
+              <TextField
+                id="product-price"
+                label="Product Price"
+                type="number"
+                name="productPrice"
+                // margin="normal"
+              />
+            )}
 
             {variants.length === 0 && (
               <TextField
@@ -112,7 +114,11 @@ export default function AddProducts() {
               // margin="normal"
             />
 
-            <Stack direction={variants.length > 0 ? 'column' : 'row'} alignItems='center' gap={1} >
+            <Stack
+              direction={variants.length > 0 ? "column" : "row"}
+              alignItems="center"
+              gap={1}
+            >
               <Button
                 variant="contained"
                 color="success"
@@ -173,7 +179,7 @@ export default function AddProducts() {
                       shrink: true,
                     }}
                   />
-                  <IconButton aria-label="delete" size="large" color="error" >
+                  <IconButton aria-label="delete" size="large" color="error">
                     <DeleteIcon onClick={() => handleRemove(variant.id)} />
                   </IconButton>
                 </Stack>

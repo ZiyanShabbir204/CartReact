@@ -21,7 +21,10 @@ const AdminProductCardVariant = ({ variants }) => {
     <Accordion
       sx={{
         boxShadow: "none",
+        marginTop:"8px",
+       
       }}
+    
     >
       <AccordionSummary
         expandIcon={<ExpandMoreIcon />}
@@ -30,9 +33,9 @@ const AdminProductCardVariant = ({ variants }) => {
       >
         Variants
       </AccordionSummary>
-      <AccordionDetails>
+      <AccordionDetails sx={{ height:"auto"}}>
 
-        <Box sx={{ height: 400, width: "100%" }}>
+        <Box sx={{ height: "auto", width: "100%" }}>
           <DataGrid
             className="variant-data-grid"
             rows={variants}
@@ -44,6 +47,7 @@ const AdminProductCardVariant = ({ variants }) => {
                 },
               },
             }}
+           
             pageSizeOptions={[5]}
           />
         </Box>

@@ -29,14 +29,16 @@ const UpdateProduct = () => {
     const productObj = {
       productID: targetProduct.productID,
       productName: productName.value,
-      productPrice: productPrice.value,
+      // productPrice: productPrice.value,
       imageURL: imageURL.value,
     };
-    {
-      !targetProduct.variants
-        ? (productObj.availableQuantity = availableQuantity.value)
-        : (productObj.variants = targetProduct.variants);
+    if (targetProduct.variants) {
+      productObj.variants = targetProduct.variants;
+    } else {
+      productObj.availableQuantity = availableQuantity.value;
+      productObj.productPrice = productPrice.value;
     }
+
     setProductsData((prev) =>
       prev.map((p) => {
         if (+p.productID === targetProduct.productID) {
@@ -53,7 +55,7 @@ const UpdateProduct = () => {
           return {
             ...p,
             productName: productName.value,
-            productPrice: productPrice.value,
+            productPrice: productPrice?.value,
           };
         } else {
           return p;
@@ -106,6 +108,15 @@ const UpdateProduct = () => {
       availableQuantity: 0,
     };
 
+    // const varaints = [...targetProduct.variants]
+    // varaints.push(newVariant)
+    //   setTargetProduct((prev) => {
+    //     return {
+    //       ...prev,
+    //       variants: varaints,
+    //     };
+    //   });
+
     if (!targetProduct.variants) {
       // targetProduct.variants=newVariant;
       setTargetProduct((prev) => {
@@ -115,8 +126,11 @@ const UpdateProduct = () => {
         };
       });
     } else {
-      const variantList = targetProduct.variants;
-      variantList.push(newVariant);
+
+      const variantList = [...targetProduct.variants];
+      console.log("variantlist", variantList);
+      console.log("newVariant", newVariant);
+      variantList.push(newVariant );
       setTargetProduct((prev) => {
         return {
           ...prev,
@@ -127,24 +141,23 @@ const UpdateProduct = () => {
   };
 
   const handleRemove = (productID) => {
-    const tempVariant =  targetProduct.variants.filter((variant) => variant.id != productID)
-    setTargetProduct((prev)=>{
-      if (tempVariant){
-        return{
+    const tempVariant = targetProduct.variants.filter(
+      (variant) => variant.id != productID
+    );
+    setTargetProduct((prev) => {
+      if (tempVariant) {
+        return {
           ...prev,
-          variants:tempVariant
-        }
+          variants: tempVariant,
+        };
+      } else {
+        return {
+          ...prev,
+        };
       }
-      else{
-        return{
-          ...prev
-        }
-      }
-    })
-
+    });
 
     // targetProduct.variants.filter()
-
   };
 
   return (
@@ -192,7 +205,7 @@ const UpdateProduct = () => {
                 // margin="normal"
               />
 
-              <TextField
+              {/* <TextField
                 id="product-price"
                 label="Product Price"
                 type="number"
@@ -200,7 +213,7 @@ const UpdateProduct = () => {
                 onChange={changeHandler}
                 value={targetProduct.productPrice}
                 // margin="normal"
-              />
+              /> */}
               <TextField
                 id="image-url"
                 name="imageURL"
@@ -211,15 +224,26 @@ const UpdateProduct = () => {
                 value={targetProduct.imageURL}
               />
               {!targetProduct.variants ? (
-                <TextField
-                  id="available-quantity"
-                  name="availableQuantity"
-                  label="Available Quantity"
-                  variant="outlined"
-                  // margin="normal"
-                  onChange={changeHandler}
-                  value={targetProduct.availableQuantity}
-                />
+                <>
+                  <TextField
+                    id="product-price"
+                    label="Product Price"
+                    type="number"
+                    name="productPrice"
+                    onChange={changeHandler}
+                    value={targetProduct.productPrice}
+                    // margin="normal"
+                  />
+                  <TextField
+                    id="available-quantity"
+                    name="availableQuantity"
+                    label="Available Quantity"
+                    variant="outlined"
+                    // margin="normal"
+                    onChange={changeHandler}
+                    value={targetProduct.availableQuantity}
+                  />
+                </>
               ) : (
                 targetProduct.variants.map((variant) => (
                   <Stack
